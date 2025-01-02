@@ -1,5 +1,5 @@
 $env:Path +=";C:\Android\platform-tools"
-Set-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Definition)
+Set-Location -Path (Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition)) "Update File")
 adb shell mkdir /sdcard/dload
 adb shell mkdir /sdcard/dload
 adb shell am start -a pvr.intent.action.SYSTEM_UPDATE #open system update

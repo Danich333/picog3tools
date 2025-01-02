@@ -1,4 +1,4 @@
-$env:Path +=";C:\Android\platform-tools"
+$env:Path += ";$(Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition))\platform-tools"
 Set-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Definition)
 adb shell am force-stop com.picovr.settings
 adb shell am start -n com.picovr.settings/com.picovr.vrsettingslib.UnityActivity -a pui.settings.action.GENERAL_SETTINGS

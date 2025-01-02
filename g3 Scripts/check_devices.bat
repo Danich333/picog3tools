@@ -1,3 +1,4 @@
 @echo off
-powershell.exe -ExecutionPolicy Bypass -NoExit -Command "$env:Path +=';C:\Android\platform-tools'; adb devices"
+powershell.exe -ExecutionPolicy Bypass -Command "$env:Path +=';%~dp0platform-tools'; adb devices"
+echo Press any key to exit...
 pause

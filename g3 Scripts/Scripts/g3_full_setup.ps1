@@ -1,5 +1,5 @@
-$env:Path +=";C:\Android\platform-tools"
-Set-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Definition)
+$env:Path += ";$(Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition))\platform-tools"
+Set-Location -Path (Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition)) "Update File")
 Write-Host "First Page"
 adb shell input keyevent 61 #first
 adb shell input keyevent 66
@@ -98,7 +98,7 @@ adb shell sleep 2
 adb shell am start -a pvr.intent.action.SYSTEM_UPDATE #open system update
 Write-Host "Wait for 10 seconds"
 adb shell sleep 10
-adb push "C:\Users\danic\OneDrive\Documents\Scripts\g3 Scripts\g3update.zip" /sdcard/dload/ #have to rename file to g3update.zip
+adb push "g3update.zip" /sdcard/dload/ #have to rename file to g3update.zip
 Write-Host "Wait for 5 seconds"
 adb shell sleep 5
 adb shell ls /sdcard/dload/g3update.zip
