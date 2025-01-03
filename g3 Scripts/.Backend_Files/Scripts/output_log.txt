@@ -1,0 +1,1 @@
+﻿Device                OS Version           WiFi Status
