@@ -1,4 +1,8 @@
 @echo off
+setlocal
+
+:start_batch
+
 :: Add platform-tools to PATH
 set PATH=%PATH%;%~dp0.Backend_Files\platform-tools
 
@@ -15,7 +19,7 @@ cd /d "%~dp0"
 
 :: Initialize the output file
 set OUTPUT_FILE=%~dp0device_status_output.txt
-echo Device ID                       OS Version                 Wi-Fi Status > "%OUTPUT_FILE%"
+echo Device ID                       OS Version                 Wi-Fi Status                        Pass/Fail > "%OUTPUT_FILE%"
 
 :: List available scripts
 echo Select a task:
@@ -28,9 +32,10 @@ echo 5 - System update (g3_system_update.ps1)
 echo 6 - Initial Setup Only (g3_setup.ps1)
 echo 7 - Factory Reset (g3_factory_reset.ps1)
 echo 8 - Play Sound
+echo E - Exit
 
 :: Prompt user for choice
-set /p CHOICE=Enter the script number to run (0/1/2/3/4/5/6/7):
+set /p CHOICE=Enter the script number to run:
 
 :: Determine the script to run
 if "%CHOICE%"=="0" set SCRIPT=g3_full_setup.ps1
@@ -42,7 +47,8 @@ if "%CHOICE%"=="5" set SCRIPT=g3_system_update.ps1
 if "%CHOICE%"=="6" set SCRIPT=g3_setup.ps1
 if "%CHOICE%"=="7" set SCRIPT=g3_factory_reset.ps1
 if "%CHOICE%"=="8" set SCRIPT=play_sound.ps1
-
+if "%CHOICE%"=="9" set SCRIPT=stop_sound.ps1
+if "%CHOICE%"=="e" goto :eof
 
 
 if not defined SCRIPT (
@@ -90,5 +96,8 @@ for %%i in (!DEVICE_LIST!) do (
     start powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%SCRIPT_PATH%" -DeviceId %%i -OutputFile "%OUTPUT_FILE%"
 )
 
-pause
+
+
+goto :start_batch
+
 endlocal

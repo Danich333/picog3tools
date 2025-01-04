@@ -43,6 +43,7 @@ if ($DeviceId) {
     adb -s $DeviceId shell input keyevent 61
     adb -s $DeviceId shell input keyevent 61
     adb -s $DeviceId shell input keyevent 66
+    adb -s $DeviceId shell sleep 5
     adb -s $DeviceId shell am force-stop com.android.settings
 }
 else{
@@ -82,5 +83,6 @@ else{
     adb shell input keyevent 61
     adb shell input keyevent 61
     adb shell input keyevent 66
+    adb shell sleep 5
     adb shell am force-stop com.android.settings
 }

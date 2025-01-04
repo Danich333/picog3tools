@@ -108,8 +108,9 @@ Invoke-Expression "$Command shell input keyevent 61"
 Invoke-Expression "$Command shell input keyevent 61"
 Invoke-Expression "$Command shell input keyevent 61"
 Invoke-Expression "$Command shell input keyevent 66"
-Invoke-Expression "$Command shell am force-stop com.android.settings"
 Invoke-Expression "$Command shell sleep 5"
+Invoke-Expression "$Command shell am force-stop com.android.settings"
+Invoke-Expression "$Command shell sleep 1"
 #update from file
 if ($DeviceId){
     adb -s $DeviceId shell mkdir /sdcard/dload
