@@ -137,7 +137,6 @@ echo Running "%SCRIPT%" on all connected devices...
 
 :: Run the script on each device
 for %%i in (!DEVICE_LIST!) do (
-    ::set /a DEVICE_COUNT+=1
     start powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%SCRIPT_PATH%" -DeviceId %%i -OutputFile "%OUTPUT_FILE%"
     
 )
