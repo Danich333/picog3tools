@@ -4,12 +4,6 @@ setlocal
 set EXIT_FLAG=0
 set FIRST_START=1
 
-::echo ATTENTION! PLEASE MAKE SURE THE REMOTES ARE ON FOR ALL devices
-::pause
-::echo MAKE SURE TO DO SYSTEM UPDATE FIRST (CHOICE 0)
-::pause
-
-
 :start_batch
 
 set UPD="n"
@@ -21,7 +15,6 @@ set PATH=%PATH%;%~dp0.Backend_Files\platform-tools
 ::delete files if they exist
 if exist "%~dp0CHECK_FILE.txt" del /f /q "%~dp0CHECK_FILE.txt"
 if exist "%~dp0device_status_output.txt" del /f /q "%~dp0device_status_output.txt"
-
 
 :: Verify adb is available
 adb version >nul 2>&1
@@ -38,12 +31,9 @@ cd /d "%~dp0"
 set OUTPUT_FILE=%~dp0device_status_output.txt
 echo Device ID                       OS Version                 Wi-Fi Status                        Pass/Fail > "%OUTPUT_FILE%"
 
-
 :: Create a check file
 set CHECK_FILE=%~dp0CHECK_FILE.txt
 echo 0 > "%CHECK_FILE%"
-
-::echo "%FIRST_START%"
 
 :: Get the list of connected devices
 echo Detecting connected devices...
@@ -74,22 +64,18 @@ for %%i in (!DEVICE_LIST!) do (
     set /a DEVICE_COUNT+=1
 )
 
-
 if %FIRST_START% == 1 (
     echo Would you like to run system update?
     set /p UPD= (y for yes, n for no^))
-    ::echo %UPD%
     if /i "%UPD%"=="y" (
         echo updating
         set CHOICE=0
-        ::echo "%CHOICE%"
         goto :skip
     )
 )
 set FIRST_START=0
 echo WARNING! PLEASE MAKE SURE THE CONTROLLERS ARE ON BEFORE PROCEEDING
 :: List available scripts
-::echo "%FIRST_START%"
 echo Select a task:
 echo 0 - System update
 echo 1 - Check device status
@@ -131,15 +117,10 @@ if /i "%CHOICE%"=="a" set SCRIPT=shut_down_all.ps1
 if /i "%CHOICE%"=="u" set SCRIPT=ultra4_setup.ps1
 if /i "%CHOICE%"=="l" goto :show_all
 
-
-::if /i "%UPD%"=="y" set SCRIPT=g3_system_update.ps1
-
 if not defined SCRIPT (
     echo Invalid choice. Try again.
     goto :start_batch
 )
-
-
 
 :: Get the full path to the selected script
 set SCRIPT_PATH=%~dp0.Backend_Files\Scripts\%SCRIPT%
@@ -150,14 +131,9 @@ if not exist "%SCRIPT_PATH%" (
     exit /b
 )
 
-
-
-
 echo Connected devices:
 for %%i in (!DEVICE_LIST!) do echo %%i
 echo Running "%SCRIPT%" on all connected devices...
-
-
 
 :: Run the script on each device
 for %%i in (!DEVICE_LIST!) do (
@@ -165,7 +141,6 @@ for %%i in (!DEVICE_LIST!) do (
     start powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%SCRIPT_PATH%" -DeviceId %%i -OutputFile "%OUTPUT_FILE%"
     
 )
-
 
 if "%SCRIPT%" == "check_status_all.ps1" (
     echo Waiting...
@@ -176,7 +151,6 @@ if "%SCRIPT%" == "check_status_all.ps1" (
 
 goto :start_batch
 
-::FIX HERE GOTO RUNCHECK BAD
 :run_check
 setlocal enabledelayedexpansion
 set CHECK_INT=0  
