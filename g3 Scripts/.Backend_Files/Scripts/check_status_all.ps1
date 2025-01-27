@@ -13,6 +13,8 @@ else {
     $Command = "adb"
 }
 
+#Read the check file
+$checkPath = Join-Path (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition))) "CHECK_FILE.txt"
 
 
 
@@ -44,5 +46,13 @@ else {
 
 $line = "$DeviceId		$osversion			   $wifiStatusText			$PassFail"
 Add-Content -Path $OutputFile -Value $line
+$integer = [int](Get-Content -Path "$checkPath" -TotalCount 1)
+Write-Host $integer
+# Add 1 to the integer
+$integer += 1
+Write-Host $integer
+# Overwrite the file with the updated integer value
+$integer | Set-Content -Path "$checkPath"
+#Write-Output "$line"
 
-Invoke-Expression "$Command shell getprop ro.product.product.name"
+#Invoke-Expression "$Command shell getprop ro.product.product.name"

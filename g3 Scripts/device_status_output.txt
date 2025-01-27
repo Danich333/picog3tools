@@ -1,3 +1,1 @@
-Device ID                       OS Version                 Wi-Fi Status 
-PA7R40SGH9250179W		5.9.9			   Not Connected
-PA7R40SGHA280008W		5.9.9			   Connected
+Device ID                       OS Version                 Wi-Fi Status                        Pass/Fail 

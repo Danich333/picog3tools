@@ -7,6 +7,10 @@ Set-Location -Path (Split-Path -Parent $MyInvocation.MyCommand.Definition)
 
 
 if ($DeviceId) {
+    $wifiStatus = adb -s $DeviceId shell dumpsys wifi | Select-String -Pattern "state: CONNECTED"
+    if($wifiStatus) {
+    exit
+    }
     adb -s $DeviceId shell input keyevent KEYCODE_WAKEUP
     adb -s $DeviceId shell sleep 0.5
     adb -s $DeviceId shell am start -a android.settings.WIFI_SETTINGS
@@ -47,6 +51,10 @@ if ($DeviceId) {
     adb -s $DeviceId shell am force-stop com.android.settings
 }
 else{
+    $wifiStatus = adb shell dumpsys wifi | Select-String -Pattern "state: CONNECTED"
+    if($wifiStatus) {
+    exit
+    }
     adb shell input keyevent KEYCODE_WAKEUP
     adb shell sleep 0.5
     adb shell am start -a android.settings.WIFI_SETTINGS
