@@ -38,6 +38,12 @@ else {
     adb shell sleep 3
 }
 
+if ($osversion -eq $latestVersion){
+    Write-Host "System already up to date"
+    Start-Sleep -Seconds 3
+    exit
+}
+
 Invoke-Expression "$Command shell input keyevent KEYCODE_WAKEUP"
 Invoke-Expression "$Command shell sleep 0.5"
 if ($osversion -ne $latestVersion){
